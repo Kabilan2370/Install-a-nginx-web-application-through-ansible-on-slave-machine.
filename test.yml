@@ -1,0 +1,43 @@
+- hosts: all
+  remote_user: ubuntu
+  become: yes
+  tasks:
+    - name: update
+      apt:
+        update_cache: yes
+        state: latest
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+    - name: Allow firewall Nginx HTTP
+      command: ufw allow 'Nginx HTTP' 
+    - name: Start a service
+      service:
+        name: nginx
+        state: started
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /var/www/html/web-server
+        state: directory
+        mode: '0755'
+    - name: Create "index.html" file
+      template:
+        src: "/home/ubuntu/web-page.html"
+        dest: /var/www/html/web-server/index.html
+        mode: 0644
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: /var/www/html/web-server/index.html
+        dest: /var/www/html/index.html
+        mode: '0644'
+        remote_src: true
+    - name: Enable default Nginx website
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/default
+        path: /etc/nginx/sites-enabled/default
+        state: link
+    - name: restart a service
+      service:
+        name: nginx
+        state: restarted
