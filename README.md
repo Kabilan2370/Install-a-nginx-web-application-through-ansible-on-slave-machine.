@@ -2,7 +2,7 @@
 Inatall a nginx on our slave node through ansible infra created by terraform.
 Launch a customized html code on nginx default index file. Deploy a sample html on the web.
 
-##*![setup-a-master-slave-configuration-using-ansible](https://github.com/Kabilan2370/setup-a-master-slave-configuration-using-ansible)*
+## *![setup a master slave configuration using ansible](https://github.com/Kabilan2370/setup-a-master-slave-configuration-using-ansible)*
 
 ![image](NginxArchi.png)
 
